@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>kittenGen — Power User Resource Portal</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -200,7 +200,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;yaml&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,9 +211,7 @@
       <img src="images/logo.png" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="yaml">MAML</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -222,7 +220,6 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
             <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -231,235 +228,107 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p><img src="http://i.imgur.com/RdvXl5u.png" alt="kittenGen cover image" /></p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<h3 id="welcome-to-the-kittengen-power-user-resource-portal">Welcome to the kittenGen Power User Resource Portal!</h3>
 
-<p>This example API documentation page was created with <a href="https://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<p>This guide contains everything you need to unlock the full potential of your kittenGen V1 bioPrinter, including the ability to print kittens from the CLI, advanced configuration using our proprietary markup language, MAML, and accessing the full feature set of our GUI application in a headless environment. <strong>Happy printing!</strong></p>
 
-<h1 id="getting-started">Getting Started</h1>
+<aside class="notice">The information in this guide assumes a basic familiarity with terminal commands, as well as comfort editing configuration files using your text editor of choice.</aside>
 
 <h1 id="your-first-kitten">Your First Kitten</h1>
 
-<h1 id="advanced-configuration">Advanced Configuration</h1>
+<p>This quick-start guide will walk you through the basic steps to install the CLI tools, and get you up and running with your first kitten. You should already have your bioPrinter plugged into a USB port. If you haven&rsquo;t unboxed and assembled your bioPrinter yet, please refer to our <a href="#">kittenGen Quick-Start Hardware Guide</a> [PDF].</p>
+
+<aside class="notice">The CLI tools referenced in this guide only run on UNIX-like systems such as Ubuntu Linux and macOS. Our Windows users are important to us, and we have compatible versions of our software scheduled for release in Q4 2017.</aside>
+
+<h2 id="downloading-and-installing-the-cli-tools">Downloading and installing the CLI tools</h2>
+<pre class="highlight shell tab-shell"><code>wget <span class="s2">"http://kitten.io/support/cli-latest.sh"</span>
+chmod +x ./cli-latest.sh
+./cli-latest.sh
+</code></pre>
+<p>Start by downloading the latest installation package from our server using <code class="prettyprint">wget</code>. This requires an Internet connection. (If you don&rsquo;t have <code class="prettyprint">wget</code>, <code class="prettyprint">curl -O</code> works as well.)</p>
+
+<p>Then make the downloaded install file executable, and run it.</p>
+
+<aside class="warning">Don&rsquo;t run as root! The installation package requires write privileges to one of the following locations: /usr/bin, /usr/local/bin. If the installation fails with a permission denied error, resolve the permission error rather than resorting to sudo or su.</aside>
+
+<p>If you accept the defaults as offered, your kittenGen config folder will be located at <code class="prettyprint">~/.kittenrc</code>.</p>
+
+<h2 id="starting-a-project">Starting a project</h2>
+<pre class="highlight shell tab-shell"><code>mkdir ~/kittengen | <span class="nb">cd</span> ~/kittengen
+kitten new --examples
+</code></pre>
+<p>To initialize a kitten project, create a folder (we&rsquo;ll be using <code class="prettyprint">~/kittengen</code> in our examples) and use the <code class="prettyprint">kitten new</code> command. We&rsquo;ll be appending the <code class="prettyprint">--examples</code> flag, which produces the pre-written kitten sourcefiles we&rsquo;ll be using for this tutorial.</p>
+
+<p>This will create the following file structure:</p>
+
+<table><thead>
+<tr>
+<th>Folder</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>src</td>
+<td>kitten sourcefiles</td>
+</tr>
+<tr>
+<td>cfg</td>
+<td>project-specific configuration files</td>
+</tr>
+</tbody></table>
+
+<h2 id="printing-a-kitten">Printing a kitten</h2>
+<pre class="highlight shell tab-shell"><code>kitten make lexi
+<span class="gp">&gt; </span>...Printing Lexi.
+<span class="gp">&gt; </span>...
+<span class="gp">&gt; </span>...
+<span class="gp">&gt; </span>...finished printing. Meow~!
+</code></pre>
+<p>Using the <code class="prettyprint">--examples</code> flag in the previous step populated the <code class="prettyprint">/src</code> folder with some sample kittens. We&rsquo;ll be printing Lexi, one of our most popular kittens, using the command <code class="prettyprint">kitten make</code>.</p>
+
+<p><code class="prettyprint">kitten make &#39;name&#39;</code> checks for a <code class="prettyprint">src/name.kg</code> in your project folder.</p>
+
+<p><strong>You&rsquo;ve just printed your first kitten! Once the cooldown window has elapsed, Lexi will be ready to play!</strong></p>
+
+<aside class="notice">Kittens are living creatures and require food. Please check our <a href="#">Kitten General Store</a> for food, toys, and nutritional syrups specially formulated for your bioprinted kitten.</aside>
 
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 
-<h1 id="authentication">Authentication</h1>
+<h2 id="can-i-print-animals-other-than-kittens">Can I print animals other than kittens?</h2>
 
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>In short, no. Preparing a species for bioprinting requires exhaustive genomic sequencing, metadata tagging, and ethical certification before being suitable for release to our customers.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>Technically, other species are possible, but for our initial release, our development has focused solely on the genome of <em>Felis catus</em>, the common house cat.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<h2 id="how-does-the-kittengen-unit-know-how-to-print-a-kitten">How does the kittenGen unit know how to print a kitten?</h2>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>Each kittenGen bioPrinter comes with a non-user-serviceable firmware containing the <em>F. catus</em> genome, which the machine&rsquo;s Nucleotide Processing Unit (NPU) reads to produce lifeforms within constraints that ensure their long-term viability.</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Given the highly complex nature of mammalian bioprinting, a field still in its infancy, this is the central innovation in usability that allows the general public to participate in the miraculous life-creation process formerly reserved for scientists, deities, and mama cats.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<h2 id="how-do-i-produce-kittens-that-are-siblings">How do I produce kittens that are siblings?</h2>
 
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<p>The kittenGen system separates concerns by parameterizing all facets of the bioprinting process. The bioPrinter does not have any capability to create or modify kittens itself, besides reprinting the last kitten sent to its buffer. A litter could technically be created in this fashion, but they would have to be separated to prevent inbreeding, which has distinctly deleterious results compared to inbreeding in litters of unprinted kittens.</p>
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+<p>Instead, if one desires a litter of kittens, we recommend using build-time config written in MAML, our proprietary markup language. If the system detects a <code class="prettyprint">litter.mml</code> in your project folder, it will reprint your kitten a number of times specified in the <code class="prettyprint">litter_mean</code> and <code class="prettyprint">litter_stdev</code> keys  while allowing for customizable variance in size, color, breed, and personality.</p>
 
-<h1 id="kittens">Kittens</h1>
+<h2 id="ive-grown-tired-of-my-adult-cats-is-there-a-way-to-reclaim-the-materials-used-to-create-them">I&rsquo;ve grown tired of my adult cats. Is there a way to reclaim the materials used to create them?</h2>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>That is called killing your cat, and is strongly recommended against.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>kittenGen bioJet™ cartridges are a proprietary blend of synthetic mammalian stem cells, retrovirals, and nanoparticles, and do not involve the harvesting of genetic material from felines, living or dead. There is currently no known way to turn a printed cat &ldquo;back into&rdquo; its constituent components.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<p>Instead, if you have tired of your cat, we recommend donating them to one of the approved shelters on our <a href="#">shelter search page</a>. If your cat goes unhoused for too long, these shelters have been trained in the process of sending your former cat to us, for rehousing through our <em>Paws For A Cause™</em> program that donates unwanted cats to hospital wards and nursing homes across the country.</p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/api/kittens</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can&rsquo;t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-
-<h3 id="url-parameters">URL Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-
-          <h1 id="errors">Errors</h1>
-
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&lsquo;s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarily offline for maintenance. Please try again later.</td>
-</tr>
-</tbody></table>
+<p>And then, of course, you&rsquo;re welcome to begin anew a relationship with a freshly-sculpted kitten! 🐈</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="yaml">MAML</a>
           </div>
       </div>
     </div>
