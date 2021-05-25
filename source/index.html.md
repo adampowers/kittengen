@@ -16,7 +16,7 @@ search: true
 
 ![kittenGen cover image](http://i.imgur.com/RdvXl5u.png)
 
-###Welcome to the kittenGen Power User Resource Portal!
+### Welcome to the kittenGen Power User Resource Portal!
 
 This guide contains everything you need to unlock the full potential of your kittenGen V1 bioPrinter, including the ability to print kittens from the CLI, advanced configuration using our proprietary markup language, MAML, and accessing the full feature set of our GUI application in a headless environment. **Happy printing!**
 
